@@ -1,30 +1,26 @@
 # dijsktraproj
 # Dijkstra and LSDB: 10 & 15
-Auteurs : Nolan & Constance
+Authors : Nolan & Constance
 
-Ce programme calcule les plus courts chemins dans un réseau de routeurs avec Dijkstra. Pour chaque routeur, il affiche sa table de base de données (LSDB), son arbre des plus courts chemins, les distances et sa table de routage.
+This program compute the shortest path in a routing network with Djikstra algorithm. For each router, the program print the Data base table, the shortest path treeand the distance and the routing table.
+The program use the standard library Python (V3)
 
-Le programme n'utilise que la bibliothèque standard de Python (version 3).
-
-# Projet
+# Project
 ```bash
 python3 dijkstra.py
 ```
-Le programme demande ensuite le mode de du réseau :
+Ask the user the mode of the network : 
+1. **Random network** :  5 and 8 routers, randomly generated. A isolate router is generate 1 over 3 times
+2. **Adjacency matrix** : you enter the matrice and the weight line per line
+If not `2` the code is launch automiticaly in random
 
-1. **Réseau aléatoire** : entre 5 et 8 routeurs, générés au hasard. Une fois sur trois, un routeur isolé est ajouté.
-2. **Matrice d'adjacence** : tu entres toi-même la matrice des coûts, ligne par ligne.
+# Matrix
+First you asnwer the number of routers with names (A/B/C...)
+Then each line contains as many numbers as there are routers, separated by spaces. And 0 mean non link
+The wight of a egde is a positive number
+The matrice must be symmetrical the cost must be the same in both direction  
 
-Tout autre choix que `2` lance en automatique le mode aléatoire.
-
-# Entrer une matrice
-- Le nombre de routeurs est demandé en premier. Les noms sont A, B, C, etc.
-- Chaque ligne contient autant de nombres qu'il y a de routeurs, séparés par des espaces.
-- `0` signifie « pas de lien ».
-- Les coûts doivent être des nombres uniquement entiers positifs  
-- La matrice doit être symétrique : le coût de A vers B doit être égal au coût de B vers A.
-
-Exemple réseau à 5 routeurs :
+Example 5 routers :
 ```
 2
 5
@@ -34,11 +30,11 @@ Exemple réseau à 5 routeurs :
 0 4 0 0 1
 0 0 3 1 0
 ```
-Dans cet exemple, la première ligne (`2`) choisit la saisie de la matrice, la deuxième (`5`) donne le nombre de routeurs, et les cinq suivantes forment la matrice.
+In this example, the first line (`2`) specifies that a matrix is to be entered, the second line (`5`) specifies the number of routers, and the next five lines make up the matrix.
 
 # Terminal
-Le programme affiche d'abord la matrice des coûts, puis un bloc par routeur. 
-Exemple :
+program print first cost matrice then a part by router
+Example :
 
 ```
 ========== Router ==========
@@ -67,23 +63,22 @@ Routing table:
    E           | B             | 6
 ```
 
-- LSDB : pour chaque routeur, ses voisins et le coût de chaque lien.
-- Shortest path tree : l'arbre des plus courts chemins depuis le routeur étudié. Le nombre entre parenthèses est le coût total depuis la source.
-- Distances and paths : la distance minimale, le prédécesseur et le chemin complet vers chaque destination.
-- Routing table : pour chaque destination, le prochain saut et le coût.
+- LSDB: for each router, its neighbours and the cost of each link 
+- Shortest path tree: the tree of shortest paths from the router in question. The number in brackets is the total cost from the source
+- Distances and paths: the minimum distance, the predecessor and the complete path to each destination 
+- Routing table: for each destination, the next hop and the cost
+unreachable if the router is not accessible
+If a router is on a other part of the network it doesn't appears in the LSDB
 
-Une destination inaccessible est affichée `unreachable`. Un routeur situé dans une autre partie du réseau n'apparaît pas dans la LSDB.
+# Limits
+If the number of routers is not an integer (e.g. `abc`), the programme terminates with an error.
+The programme does not check that the values on the diagonal are 0. Any non-zero value there is ignored.
+Decimal costs (e.g. `2.5`) are not accepted.
+The LSDB is constructed from the complete network; for very large networks, the tree is displayed recursively.
+If there are more than approximately 1,000 routers linked in a chain, the programme terminates with a `RecursionError`.
 
-# Limites
-Nombre de routeurs non entier si `abc` : le programme s'arrête sur une erreur.
-Diagonale : le programme ne vérifie pas que les valeurs de la diagonale sont à 0. Une valeur non nulle y est ignorée.
-Coûts décimaux (par exemple `2.5`) : refusés.
-LSDB : elle est construite à partir du réseau complet, sans simuler l'échange de LSA entre routeurs.
-Très grands réseaux : l'affichage de l'arbre est récursif. Au-delà d'environ 1 000 routeurs alignés en chaîne, le programme s'arrête avec une erreur `RecursionError`.
-
-# Tests effectués
-Calcul des distances comparé à l'algorithme de Bellman-Ford sur 2 000 réseaux aléatoires (13 870 calculs depuis chaque source) : aucune erreur.
-Réseau à 5 routeurs : résultats conformes au calcul à la main.
-Réseau coupé en deux : les routeurs de l'autre partie sont signalés comme inaccessibles.
-Mode aléatoire lancé 200 fois : aucun échec.
-Réseau de 27 et de 200 routeurs en chaîne : résultats corrects.
+# Tests
+Calculation of distances compared with the Bellman-Ford algorithm on 2,000 random networks (13,870 calculations from each source)
+A network with 5 routers produced results matching those of the manual calculation.
+The routers on the other side are reported as inaccessible because the network is split in two
+Networks with 27 and 200 routers in a chain produced correct results, with the random mode functioning correctly in each case
