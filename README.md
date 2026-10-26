@@ -6,11 +6,10 @@ Ce programme calcule les plus courts chemins dans un réseau de routeurs avec Di
 
 Le programme n'utilise que la bibliothèque standard de Python (version 3).
 
-## Lancer 
+# Projet
 ```bash
 python3 dijkstra.py
 ```
-
 Le programme demande ensuite le mode de du réseau :
 
 1. **Réseau aléatoire** : entre 5 et 8 routeurs, générés au hasard. Une fois sur trois, un routeur isolé est ajouté.
@@ -18,7 +17,7 @@ Le programme demande ensuite le mode de du réseau :
 
 Tout autre choix que `2` lance en automatique le mode aléatoire.
 
-## Entrer une matrice
+# Entrer une matrice
 - Le nombre de routeurs est demandé en premier. Les noms sont A, B, C, etc.
 - Chaque ligne contient autant de nombres qu'il y a de routeurs, séparés par des espaces.
 - `0` signifie « pas de lien ».
@@ -37,7 +36,7 @@ Exemple réseau à 5 routeurs :
 ```
 Dans cet exemple, la première ligne (`2`) choisit la saisie de la matrice, la deuxième (`5`) donne le nombre de routeurs, et les cinq suivantes forment la matrice.
 
-## Ce que le programme affiche
+# Terminal
 Le programme affiche d'abord la matrice des coûts, puis un bloc par routeur. 
 Exemple :
 
@@ -75,14 +74,14 @@ Routing table:
 
 Une destination inaccessible est affichée `unreachable`. Un routeur situé dans une autre partie du réseau n'apparaît pas dans la LSDB.
 
-## Limites connues
+# Limites
 Nombre de routeurs non entier si `abc` : le programme s'arrête sur une erreur.
 Diagonale : le programme ne vérifie pas que les valeurs de la diagonale sont à 0. Une valeur non nulle y est ignorée.
 Coûts décimaux (par exemple `2.5`) : refusés.
 LSDB : elle est construite à partir du réseau complet, sans simuler l'échange de LSA entre routeurs.
 Très grands réseaux : l'affichage de l'arbre est récursif. Au-delà d'environ 1 000 routeurs alignés en chaîne, le programme s'arrête avec une erreur `RecursionError`.
 
-## Tests effectués
+# Tests effectués
 Calcul des distances comparé à l'algorithme de Bellman-Ford sur 2 000 réseaux aléatoires (13 870 calculs depuis chaque source) : aucune erreur.
 Réseau à 5 routeurs : résultats conformes au calcul à la main.
 Réseau coupé en deux : les routeurs de l'autre partie sont signalés comme inaccessibles.
